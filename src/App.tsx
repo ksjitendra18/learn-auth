@@ -1,24 +1,25 @@
 import { Routes, Route } from "react-router-dom";
-// import Login from "./pages/Login";
+
 import { Suspense, lazy } from "react";
-// import Navbar from "./components/Navbar";
+
 import Layout from "./components/Layout";
 
 import Home from "./pages/Home";
 const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
-const Protected = lazy(() => import("./pages/Protected"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Profile = lazy(() => import("./pages/Profile"));
 const App = () => {
   return (
     <>
-      {/* <Navbar /> */}
       <Suspense fallback="Loading">
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
-            <Route path="protected" element={<Protected />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="Profile" element={<Profile />} />
           </Route>
         </Routes>
       </Suspense>
