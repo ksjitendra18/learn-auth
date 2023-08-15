@@ -13,7 +13,7 @@ const Login = () => {
           <p className="text-gray-500 or">OR</p>
           <div className="after-or w-[100%] h-[2px] bg-gray-300 ml-2"></div>
         </div>
-        <form method="post" className="w-[100%] mx-auto md:w-auto">
+        <form className="w-[100%] mx-auto md:w-auto">
           <label htmlFor="email" className="mt-5 block text-gray-600">
             Email
           </label>
