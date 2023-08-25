@@ -4,7 +4,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 
 import { auth } from "../libs/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
@@ -17,6 +17,8 @@ const Login = () => {
     isError: false,
     errorMsg: "",
   });
+
+  const [emailNotVerified, setEmailNotVerified] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
   if (currentUser) {
@@ -38,7 +40,10 @@ const Login = () => {
     const formValues = new FormData(form);
 
     try {
+      // this is a trick to resolve the issue to resolve the authStateChanged when user verifies their email and login then it doesnot changes as it is same as signup
+      await signOut(auth);
       setIsLoading(true);
+      setEmailNotVerified(false);
       setErrHandler({ isError: false, errorMsg: "" });
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -46,7 +51,15 @@ const Login = () => {
         formValues.get("password") as string
       );
       if (userCredential.user) {
-        navigate("/dashboard");
+        if (!userCredential.user.emailVerified) {
+          setEmailNotVerified(true);
+          setErrHandler({
+            isError: true,
+            errorMsg: "Please verify your mail before logging in.",
+          });
+        } else {
+          navigate("/dashboard");
+        }
       }
     } catch (error: unknown) {
       const err = error as FirebaseError;
@@ -147,6 +160,14 @@ const Login = () => {
           {errHandler.isError ? (
             <div className="w-[100%] mx-auto md:w-auto bg-red-600 mt-3 rounded-md px-3 py-2 text-white">
               {errHandler.errorMsg}
+
+              {emailNotVerified ? (
+                <div className="  w-full flex items-center  mt-5 mb-2 justify-center">
+                  <Link className="border-2 px-3 py-1 rounded-md" to="/verify">
+                    Verify Email
+                  </Link>
+                </div>
+              ) : null}
             </div>
           ) : null}
           <div className="flex justify-end">
