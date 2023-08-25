@@ -1,7 +1,5 @@
-import React from "react";
-
-const Protected = () => {
+const Dashboard = () => {
   return <div>Protected</div>;
 };
 
-export default Protected;
+export default Dashboard;
