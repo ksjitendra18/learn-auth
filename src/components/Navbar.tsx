@@ -8,9 +8,15 @@ const Navbar = () => {
       </h1>
       <nav>
         <ul className="flex gap-4">
-          <Link to="/">Home</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Signup</Link>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/signup">Signup</Link>
+          </li>
         </ul>
       </nav>
     </header>

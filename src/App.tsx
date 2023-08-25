@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 
 import Layout from "./components/Layout";
+import Loading from "./components/Loading";
 
 import Home from "./pages/Home";
 const Login = lazy(() => import("./pages/Login"));
@@ -12,7 +13,7 @@ const Profile = lazy(() => import("./pages/Profile"));
 const App = () => {
   return (
     <>
-      <Suspense fallback="Loading">
+      <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
